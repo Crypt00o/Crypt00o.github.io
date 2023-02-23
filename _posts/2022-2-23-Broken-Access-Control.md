@@ -8,6 +8,8 @@ cover_image: /media/broken_access_control.png
 
 - `Access control, also known as authorization`, is a security mechanism that `ensures only authorized individuals or entities can access specific resources or perform particular actions`. Access control systems are used to enforce security policies and protect sensitive data by limiting access to it.
 
+![](/media/broken_access_control.png)
+
 - In the context of web applications, access control is based on `authentication and session management`. Authentication identifies the user and verifies their identity. It `ensures that only legitimate users can access the application, by requiring a password, a PIN, or some other form of identification`. Session management keeps track of which user is currently logged in and the actions they perform.
 
 - Access control determines whether the user has the necessary permissions to perform a particular action or access a resource. This can be controlled at different levels such as at the application, file, or database level. Access control can be divided into three categories: 

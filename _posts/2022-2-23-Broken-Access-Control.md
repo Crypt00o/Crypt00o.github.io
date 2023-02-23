@@ -100,15 +100,28 @@ https://exploitable.com/profile?id=123
 
 - In some cases, `when a user is not permitted to access a resource, the application may redirect them to the login page. However, the response containing the redirect could still include sensitive data belonging to the user`. This could be intercepted by an attacker, allowing them to `access sensitive information without proper authorization`. Therefore, returning a redirect to the login page alone does not always guarantee protection against such attacks.
 
-### Transform Horizontal to Vertical Privilege Escalation 
+## Transform Horizontal to Vertical Privilege Escalation 
 
 - `Horizontal privilege escalation attacks can often lead to vertical privilege escalation` by compromising a more privileged user. For instance, compromising an `administrative user account can give attackers administrative access and allow them to perform vertical privilege escalation. Using parameter tampering, attackers might be able to gain access to an administrative account page, which can disclose passwords or provide direct access to privileged functionality`. Therefore, it is crucial to identify and fix horizontal privilege escalation vulnerabilities to prevent vertical privilege escalation.
 
-### Insecure direct object references (IDOR)
+## Insecure direct object references (IDOR)
 
 - Insecure direct object references (IDOR) refer to a vulnerability where an application uses `user-supplied input to access objects directly, and an attacker can modify the input to gain unauthorized access`. This type of vulnerability allows attackers to access `sensitive information or functionality without proper authorization`. IDORs can arise from implementation mistakes, such as `failing to check user authorization or not validating input`. They were popularized by their appearance on the OWASP Top Ten in 2007, and continue to be a common vulnerability in web applications. To prevent IDOR vulnerabilities, `developers should use access controls and input validation to ensure that users can only access authorized resources`. Additionally, they should avoid exposing object references in URLs or other user-supplied input. Regular security testing and vulnerability assessments can also help identify and mitigate IDOR vulnerabilities.
 
+- IDOR vulnerabilities occur when attackers can `manipulate an object identifier to access unauthorized resources`, often due to predictable or sequential identifiers. When `sensitive resources are stored in static files on the server-side filesystem`, attackers can `guess or brute-force the filename to access other users' resources`. For example, a website storing chat transcripts with incrementing filenames can allow attackers to view other users' transcripts by guessing the next filename in the sequence. To prevent IDOR vulnerabilities, access controls should be applied to prevent unauthorized access to sensitive resources.
+
+- example : 
+
+```
+https://exploitable.com/static/12144.txt
+```
+
+## Access control in multi-step processes
+- Multi-step processes in web applications can be `vulnerable to access control issues if access controls are not applied consistently across all steps`. An attacker can exploit this vulnerability `by bypassing access controls on earlier steps` and directly `submitting a request for a later step`. This is often done when a `web site assumes that a user who has completed earlier steps must have the necessary authorization to access later steps`. However, an attacker can use automated tools or manual methods to `skip earlier steps and directly access later steps`. Therefore, it is important to apply access controls consistently across all steps of a multi-step process. To prevent this vulnerability, access controls should be applied at every step of the process and `verified at each step to ensure that the user is authorized to access the next step`. Additionally, web application developers should regularly perform security testing to identify and remediate vulnerabilities in multi-step processes.
+
+## Referer-based access control
+
+- Referer-based access control is a technique used by some websites to `control access to certain pages based on the Referer header in HTTP requests`. This `header indicates the page from which the request originated`. While access controls may be in place for certain pages, such as the main administrative page, sub-pages may only inspect the Referer header for access control. Attackers can exploit this vulnerability by `forging the Referer header to gain unauthorized access to sensitive sub-pages`. As `the Referer header can be easily manipulated`, this approach is not reliable for access control. Therefore, websites should use other authentication and access control mechanisms, such as `session tokens`, to prevent unauthorized access to sensitive pages. Additionally, it is important to `validate and sanitize user input, including HTTP headers`, to prevent attacks that manipulate headers or other input fields. Regular security testing can help identify and remediate Referer-based access control vulnerabilities.
 
 
-
-
+---

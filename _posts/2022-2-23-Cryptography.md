@@ -9,7 +9,7 @@ categories: [Cybersecurity, Cryptography]
 
 - Hashing is a process of taking an input (or 'message') and transforming it into a fixed-size string of bytes, known as a `hash value`, `digest`, or `checksum`. Hashing is widely used in various applications for the purpose of data integrity, security, and indexing.
 
-![](./media/how-hashing-works.png)
+![](/media/how-hashing-works.png)
 
 - A hash function is a mathematical function that takes an input (or message) and returns a fixed-size string of bytes. The function should be deterministic, meaning that the same input will always produce the same hash value. The output of the function should also have the property that even a small change in the input should produce a completely different hash value, known as the 'avalanche effect'. This property is called the 'collision resistance' of the hash function.
 
@@ -48,17 +48,17 @@ echo "hello iam eslam mohamed" | openssl sha512 -
 
 - There are two main types of encryption: symmetric encryption and asymmetric encryption. 
 
-![](./media/Symmetric-Encryption.png)
+![](/media/Symmetric-Encryption.png)
 
 1. In `symmetric encryption`, the `same key` is used to encrypt and decrypt the data. This makes symmetric encryption `fast and efficient`, but it also means that the key `must be securely shared between the sender and the recipient` of the encrypted data.
 
 
 
-![](./media/Asymmetric-Encryption.png)
+![](/media/Asymmetric-Encryption.png)
 
 - In `asymmetric encryption`, also known as `public-key encryption`, two different keys are used: a `public key and a private key`. The public key is used to encrypt the data, while the private key is used to decrypt it. This allows for secure communication between two parties, as the `public key can be freely shared, but the private key must be kept secret`.
 
-![](./media/public_key_cryptography.jpg)
+![](/media/public_key_cryptography.jpg)
 
 Encryption algorithms can be divided into two categories based on the way they work: block ciphers and stream ciphers. Block ciphers encrypt fixed-sized blocks of data, while stream ciphers encrypt data one bit or byte at a time.
 
@@ -96,7 +96,7 @@ symmetric encryption algorithms:
 
 - Encoding is the process of transforming information or data into a specific format, which can be easily stored, transmitted, or processed by computer systems. It is an important step in data representation, as it converts data into a standardized format that can be understood by different systems and devices.
 
-![](./media/encode-decode.webp)
+![](/media/encode-decode.webp)
 
 There are several types of encoding, including:
 

@@ -2,6 +2,7 @@
 layout: post
 title: Broken Access Control
 categories: [Cybersecurity, OWASP]
+cover_image: /media/broken_access_control.png
 ---
 
 

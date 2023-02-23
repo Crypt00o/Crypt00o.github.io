@@ -14,7 +14,7 @@ lang: en
 
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone:
+timezone: Africa/Cairo
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
@@ -24,7 +24,6 @@ title: 0xCrypt00o                          # the main title
 tagline: Cybersecurity Researcher | Backend Engineer   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  Cybersecurity Engineer & Researcher | Backend Engineer
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://Crypt00o.github.io'
@@ -197,4 +196,3 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
-categories: [Cybersecurity, Backend-Dev, Software-Engineering]

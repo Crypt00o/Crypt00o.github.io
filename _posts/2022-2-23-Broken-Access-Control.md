@@ -41,7 +41,7 @@ categories: [Cybersecurity, OWASP]
 
 - Vertical privilege escalation is a type of security vulnerability `where a user gains access to functionality or resources that they are not authorized to access`. This typically involves a non-administrative user `gaining access to admin-level privileges, such as the ability to delete user accounts`. Vertical privilege escalation can occur through various means, such as exploiting a software vulnerability or by manipulating user inputs. It is a serious security issue that can lead to unauthorized access to sensitive data or system compromise. Effective access control and security mechanisms are necessary to prevent vertical privilege escalation.
 
-### 1. Unprotected functionality 
+###  Unprotected functionality 
 
 - Unprotected functionality is a type of security vulnerability that ` allows unauthorized access to sensitive functionality without proper access controls`. It arises when an application `fails to enforce protection over sensitive functions, such as administrative functions `, and can occur due to poor design or implementation. Attackers can exploit unprotected functionality by directly ` accessing sensitive URLs `, allowing them to gain unauthorized access to sensitive data or resources. It is important to implement proper access controls and security mechanisms to protect against unprotected functionality vulnerabilities.
 
@@ -66,7 +66,7 @@ if (isAdmin) {
 ```
 ---
 
-### 2. Parameter-based access control methods
+###  Parameter-based access control methods
 
 - Some applications determine the user's access rights or role at login, and then `store this information in a user-controllable location, such as a hidden field, cookie, or preset query string parameter`. The application makes subsequent access control decisions based on the submitted value. For example:
 
@@ -78,7 +78,7 @@ this is insecure because we can gain access simplify by modify `hidden field, co
 
 ---
 
-### 3. Platform misconfiguration 
+###  Platform misconfiguration 
 - Platform misconfiguration can occur ` when applications use front-end controls to restrict access based on URL, but the application in backend-levels allows the URL to be overridden via a request header`. For example, some frameworks support non-standard HTTP headers like `X-Original-URL` and `X-Rewrite-URL` that can be used to ` override the original request URL, leading to potential access control bypasses`. This can result in users being able to access functionality that they are not authorized to use, leading to security vulnerabilities in the application.
 
 - In some cases, an attacker can bypass access controls by `using a different HTTP method to make a request to a restricted URL`. For example, if a web application uses rigorous front-end controls to restrict access to an action using the `POST` method on the URL `/admin/deleteUser`, but is tolerant of the `GET` method for the same action, an attacker can use the `GET` method to perform the action and bypass the access controls implemented at the platform layer. This is an example of an alternative attack on access controls.

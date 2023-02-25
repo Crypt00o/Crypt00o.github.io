@@ -128,5 +128,28 @@ https://exploitable.com/static/12144.txt
 
 - Referer-based access control is a technique used by some websites to `control access to certain pages based on the Referer header in HTTP requests`. This `header indicates the page from which the request originated`. While access controls may be in place for certain pages, such as the main administrative page, sub-pages may only inspect the Referer header for access control. Attackers can exploit this vulnerability by `forging the Referer header to gain unauthorized access to sensitive sub-pages`. As `the Referer header can be easily manipulated`, this approach is not reliable for access control. Therefore, websites should use other authentication and access control mechanisms, such as `session tokens`, to prevent unauthorized access to sensitive pages. Additionally, it is important to `validate and sanitize user input, including HTTP headers`, to prevent attacks that manipulate headers or other input fields. Regular security testing can help identify and remediate Referer-based access control vulnerabilities.
 
+## Access Control Modles
+
+- Access control security models are a set of rules that govern how access to resources or functions is managed within an organization's technology infrastructure. There are several commonly used models, each with their own strengths and weaknesses.
+
+### Programmatic Access Control (PAC)
+
+- Programmatic Access Control highly granular approach where a `matrix of user privileges is stored in a database, and access controls are applied programmatically with reference to this matrix`. This approach is `useful when access needs to be carefully managed on a per-user basis`.
+
+### Discretionary Access Control (DAC) 
+
+- Discretionary access control (DAC) `allows owners of resources or functions to assign or delegate access permissions to users`. This model is highly granular with `access rights defined to an individual resource or function and user`. While DAC can be powerful, it can also become `very complex to design and manage`, particularly in `larger organizations` with many users.
+
+### Mandatory Access Control (MAC)
+
+- Mandatory access control(MAC) is a `centrally controlled system` where `access to resources or functions is constrained based on the clearance level of a user`. Unlike DAC, users and owners of resources `have no capability to delegate or modify access rights for their resources`. MAC is commonly used in `military and government environments` where security is of paramount importance.
+
+
+### Role-Based Access Control 
+
+- Role-based access control (RBAC) `defines named roles to which access privileges are assigned`. Users are then `assigned to single or multiple roles`. RBAC provides `enhanced management` over other access control models and can `simplify access control management`, particularly in `larger organizations` with many users. However, it is most effective when there are sufficient roles to properly invoke access controls but not so many as to make the model excessively complex and unwieldy to manage.
+
+> Overall, the choice of access control security model will depend on the specific needs of the organization, including the level of granularity required, the number of users, and the importance of security.
+{: .prompt-tip }
 
 ---

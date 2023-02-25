@@ -2,7 +2,7 @@
 layout: post
 title: Broken Access Control
 date: 2023-02-23
-categories: [Cybersecurity, OWASP]
+categories: [Cybersecurity, Web]
 cover_image: /media/broken_access_control.png
 og_image: /media/broken_access_control.png
 ---

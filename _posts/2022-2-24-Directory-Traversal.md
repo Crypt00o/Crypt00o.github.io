@@ -3,6 +3,8 @@ layout: post
 title: Directory Traversal
 date: 2023-02-24
 categories: [Cybersecurity, Web]
+cover_image: /media/path-traversal.jpg
+og_image: /media/path-traversal.jpg
 ---
 
 - In a directory traversal attack, an attacker attempts to access files or directories that are outside of the intended scope of the web application.

@@ -128,6 +128,13 @@ https://exploitable.com/static/12144.txt
 
 - Referer-based access control is a technique used by some websites to `control access to certain pages based on the Referer header in HTTP requests`. This `header indicates the page from which the request originated`. While access controls may be in place for certain pages, such as the main administrative page, sub-pages may only inspect the Referer header for access control. Attackers can exploit this vulnerability by `forging the Referer header to gain unauthorized access to sensitive sub-pages`. As `the Referer header can be easily manipulated`, this approach is not reliable for access control. Therefore, websites should use other authentication and access control mechanisms, such as `session tokens`, to prevent unauthorized access to sensitive pages. Additionally, it is important to `validate and sanitize user input, including HTTP headers`, to prevent attacks that manipulate headers or other input fields. Regular security testing can help identify and remediate Referer-based access control vulnerabilities.
 
+example : 
+
+```
+GET /admin?cmd=delete&username=Crypt00o HTTP/1.1
+Host: exploitable.com
+Referer: https://www.google.com/admin
+```
 ## Access Control Modles
 
 - Access control security models are a set of rules that govern how access to resources or functions is managed within an organization's technology infrastructure. There are several commonly used models, each with their own strengths and weaknesses.

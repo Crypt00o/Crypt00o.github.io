@@ -3,9 +3,13 @@ layout: post
 title: Broken Authentication
 date: 2023-02-26
 categories: [Cybersecurity, Web]
+cover_image: /media/broken_auth.png
+og_image: /media/broken_auth.png
 ---
 
 ## Introduction 
+
+![](/media/broken_auth.png)
 
 - Authentication vulnerabilities are security weaknesses in the `process of verifying user identity to access websites or applications`. They are `critical` because they can `provide attackers with direct access to sensitive data and functions`, as well as expose additional attack surface. Identifying and exploiting authentication vulnerabilities is a `fundamental skill in cybersecurity`. Common authentication mechanisms, such as `passwords, biometrics, and multi-factor authentication`, have inherent vulnerabilities and can be compromised if implemented improperly. `Weak passwords, lack of complexity requirements, and improper storage of passwords` can make password-based authentication vulnerable. Biometric authentication can be `vulnerable to spoofing attacks`, while multi-factor authentication can be `vulnerable to social engineering attacks`. To ensure robust authentication mechanisms, developers should follow best practices and regularly assess vulnerabilities.
 

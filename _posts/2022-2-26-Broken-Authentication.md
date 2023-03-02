@@ -173,3 +173,100 @@ Even if a vulnerability in HTTP basic authentication only grants an attacker acc
 
 In summary, HTTP basic authentication is generally not considered a secure authentication method due to its weaknesses in protecting against interception, brute-force attacks, and session-related exploits. Other more secure authentication methods, such as token-based authentication or multi-factor authentication, should be used instead.
 
+### Two Factor Authentication Vulnerabilities
+
+
+- Authentication is the process of confirming the identity of a user. <u> Single-factor authentication</u> `relies on a single form of identification, such as a password, to authenticate a user's identity`. However, this method `can be compromised if the password is weak or if it falls into the wrong hands`.
+
+- To enhance security, some websites `use multi-factor authentication`, which `requires users to provide more than one form of identification to prove their identity`. The two most common forms of multi-factor authentication are `something you know and something you have`.
+
+- Something you know `refers to a piece of information that only the user should know, such as a password or PIN`. Something you have `refers to a physical object that only the user should have, such as a smartphone or a security token`. By requiring both forms of identification, multi-factor authentication `makes it more difficult for attackers to compromise a user's account`.
+
+- While verifying biometric factors, such as fingerprint or facial recognition, may be impractical for most websites, two-factor authentication is becoming increasingly common. This method requires users to `enter both a password and a temporary verification code that is sent to an out-of-band physical device in their possession`, such as a smartphone. By requiring both something the user knows (password) and something the user has (smartphone), two-factor authentication provides an extra layer of security.
+
+- It is important to note that the `full benefits of multi-factor authentication are only achieved when verifying multiple different factors`. Verifying the `same factor, such as a password, in two different ways is not considered true multi-factor authentication`. For example, `email-based two-factor authentication may require a user to enter a password and a verification code sent to their email account`. However, since `both factors rely on the user's knowledge, this is not true multi-factor authentication`.
+
+
+
+
+#### 2 FA Authentication Tokens
+
+- Two-factor authentication tokens are `physical devices or apps that generate a temporary verification code for the user to enter during the authentication process`. These devices are designed to provide an `additional layer of security beyond a password, by requiring something the user has (the token) in addition to something the user knows (the password)`.
+
+- Dedicated two-factor authentication devices, such as the `RSA token or keypad device`, generate a `unique verification code that changes every 30-60 seconds`. These devices are designed to be `highly secure and tamper-resistant`, making them difficult for attackers to compromise. Some devices also require the user to enter a PIN or biometric information, such as a fingerprint, to access the verification code.
+
+- Mobile apps, such as `Google Authenticator`, can also be used as `two-factor authentication tokens`. These apps `generate a verification code that changes every 30-60 seconds`, and the user must enter this code in addition to their password to access their account. These apps are often more convenient for users than dedicated devices since they can be easily installed on a smartphone.
+
+- However, some websites send verification codes to a user's mobile phone as a text message, which is `considered less secure than using a dedicated token`. `SMS messages can potentially be intercepted`, and attackers can also `perform SIM swapping attacks to intercept the verification code`. For this reason, it is generally recommended to use a dedicated two-factor authentication token or app whenever possible to ensure the highest level of security.
+
+#### Bypassing 2FA Common Logic Flaws
+
+- Two-factor authentication is `not foolproof`, and there have been instances where `its implementation has been flawed, allowing attackers to bypass the second authentication step entirely`.
+
+- One common flaw is <u>when the user is first prompted to enter a password and then directed to a separate page to enter the verification code. If the website does not check if the verification code has been entered before loading the "logged-in only" page</u>, an `attacker can potentially skip the second authentication step by accessing the "logged-in only" page directly after completing the password step`.
+
+- Another flaw is <u>when the website allows users to select `remember this device` after entering the verification code once</u>. This means that the user `will not be required to enter the verification code again when accessing the website from the same device in the future`. `If an attacker gains access to the user's device`, they may be `able to bypass the second authentication step` altogether.
+
+- Additionally, some websites `may allow users to bypass two-factor authentication entirely by providing an option to disable it in the account settings`. If an attacker gains access to the user's account, they can `simply disable two-factor authentication and gain unrestricted access`.
+
+- Another flaw is leading to `not-completed verification of the user's identity`. This vulnerability occurs `after the user has successfully completed the initial login step`.
+
+- for example , let's say that a user logs in by sending a `POST` request to the `login page` of a website:
+
+http-request:
+
+```
+POST /login HTTP/1.1
+Host: exploitable.com
+...
+username=johnsmith&password=abcd1234
+```
+
+- Upon successful authentication, the `website assigns a cookie to the user that is linked to their account`. The user is then taken to the `second step` of the login process:
+
+http-response:
+```
+HTTP/1.1 200 OK
+Set-Cookie: account=Crypt00o
+```
+
+http-request:
+
+```
+GET /second-login-step HTTP/1.1
+Cookie: account=Crypt00o
+```
+
+The user is required to enter a verification code in the second step of the login process. The `website uses the cookie to determine which account the user is attempting to access`:
+
+http-request:
+
+```
+POST /second-login-step HTTP/1.1
+Host: exploitable.com
+Cookie: account=Crypt00o
+...
+verification-code=987654
+```
+
+However, a malicious `attacker can exploit this vulnerability by logging in with their own credentials and then changing the value of the account cookie to an arbitrary username when submitting the verification code`:
+
+http-request:
+
+```
+POST /second-login-step HTTP/1.1
+Host: exploitable.com
+Cookie: account=someone
+...
+verification-code=987654
+```
+
+#### Buteforce to Bypass 2FA
+
+- If the attacker is `able to brute-force the verification code`, they can `gain access to other users' accounts without knowing their passwords`. This flaw in the two-factor authentication process poses a `significant security risk`.
+
+
+- Because many 2FA verification codes are `simple numeric codes`, they are `vulnerable to brute-force attacks`. To prevent this, websites should implement measures such as `rate limiting, where the website limits the number of login attempts allowed per unit of time, or locking out the account after a certain number of failed attempts`.
+
+- However, some experienced attackers can `bypass these protections by using multiple IP addresses or by using advanced techniques such as distributed computing and with automation useing spefic scripts or macros ` . In these cases, it becomes important for websites to implement more advanced protection mechanisms such as `device fingerprinting or behavior analysis`, which can detect unusual patterns of login attempts and block them before they succeed.
+

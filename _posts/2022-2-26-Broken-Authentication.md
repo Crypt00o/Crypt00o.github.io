@@ -270,3 +270,127 @@ verification-code=987654
 
 - However, some experienced attackers can `bypass these protections by using multiple IP addresses or by using advanced techniques such as distributed computing and with automation useing spefic scripts or macros ` . In these cases, it becomes important for websites to implement more advanced protection mechanisms such as `device fingerprinting or behavior analysis`, which can detect unusual patterns of login attempts and block them before they succeed.
 
+### Remember-Me Broken Functionality & Logic 
+
+- The `remember me` functionality in websites can pose a `security risk if implemented poorly`, as attackers can potentially `guess the cookie used to authenticate users without having to go through the login process`. This is particularly `dangerous if the cookie is generated using predictable values`, such as the `username and timestamp`, or worse, the `password itself`
+
+- Encrypting the cookie using a `two-way encoding like Base64 offers no protection` because the encoded string can be easily decoded. Even if proper encryption with a `one-way hash function is used, attackers can potentially guess the cookie` if they can easily `identify the hashing algorithm and no salt is used`.
+
+- Furthermore, if a `similar limit is not applied to cookie guesses as is applied to login attempts`, an attacker can `use cookie guessing to bypass login attempt limits`. For example, if a website limits login attempts to 3 per hour, an attacker can potentially guess multiple cookies within an hour to gain access without triggering the login attempt limit.
+
+### Ressting-Password Broken Functionality & Logic
+
+- When users forget their passwords, websites need to provide a way for them to reset it. However, this `password reset feature can be a security risk if not implemented securely`. `One way to reset passwords is by sending a new password to the user's email.` However, `this method is not secure` because e`mails can be intercepted by attackers`. Instead, `some websites generate a new password and send it to the user's email`, but `this password should expire soon after and be changed by the user immediately`. 
+
+
+
+- When users forget their passwords, websites often offer a way to reset them. However, this `password reset feature can be a security risk if not implemented securely`. One `common method is to send users a link to a password reset page via email`. However, some `websites make the mistake of using easily guessable parameters in the URL, such as the user's username or email address`. This approach is not secure because an `attacker can change the parameter in the URL and reset the password for any account they want`.
+
+ like : http://exploitable.com/reset-password-for-user?user=victim-user
+
+- A better way to implement password reset is `to use a unique, hard-to-guess token in the URL instead of personal information like the username or email address`. The `website should generate this token and make it unique to each user`. When users click on the reset link with the token in the URL, the website should check if the token is valid and which account it belongs to.
+
+like : http://exploitable.com/reset-password-for-user?token=z37kmtwfn2uskpq67q4dxnuhiajr2nxx
+
+
+- The `token should also expire after a short period of time and be destroyed immediately after the password has been reset`. However, some websites `fail to also validate the token again` when the reset form is submitted. This means that an `attacker could visit the reset form, delete the token, and use the form to reset the password for any account` they choose.
+
+
+- Emails are generally `not considered secure for storing confidential information` because they `can be accessed from multiple devices and are not designed for secure storage`. Therefore, it's important to implement password reset features in a more secure way to prevent unauthorized access to user accounts.
+
+
+#### Password reset poisoning
+
+First Let,s Understand How Password reset Work
+
+
+- When users forget their passwords, websites allow them to reset it by:
+
+1. generating a temporary, unique, high-entropy token associated with their account.
+2. The website sends an email to the user containing a link with the unique reset token as a query parameter.
+3. The user visits the URL, and if the token is valid, they can enter a new password.
+
+Password reset poisoning is a method of stealing the unique token to change another user's password. This attack can compromise the security of user accounts and website owners should ensure their password reset links are secure.
+
+
+- Password reset poisoning is a method of `stealing the unique token to change another user's password.` This attack can compromise the security of user accounts and website owners should ensure their password reset links are secure. 
+
+- Password reset poisoning can be done where an `attacker manipulates a website to generate a password reset link that leads to a domain under their control`. This `allows the attacker to steal secret tokens necessary to reset user passwords and gain access to their accounts`. This technique can be used on vulnerable websites and can compromise the security of user accounts. To prevent this, website owners should ensure that their password reset links are `secure and not susceptible to manipulation`.
+
+#### How Password-Reset-Poison Work Step By Step
+
+> 1. attacker `intercepts a password reset request` and `modifies the Host header to point to a domain that the attacker own or  control`.
+> 2. The Website then `send the victim a genuine password reset email that contains a valid password reset token` associated with their account to victim emails, `but with a URL that points to the attacker's server` instead of the legitimate website.
+> 3. the victim `clicks on the link, the password reset token is delivered to the attacker's server`. The attacker can then `use the stolen token to reset the victim's password to whatever they like` and subsequently log in to their account.
+
+<br><br>
+
+- Even if the attacker cannot control the password reset link, they may `still be able to inject HTML into sensitive emails using (the "Host" header).` While email clients typically do not execute JavaScript, other `HTML injection techniques like dangling markup attacks` may still apply.
+
+- In a real attack, the attacker may seek to increase the probability of the victim clicking the link by first `warming them up with a fake breach notification`, for example.
+
+- It is important to be aware of this type of attack and take measures to protect against it, such as `using multi-factor authentication and monitoring for suspicious activity`.
+
+
+<br><br>
+
+#### Top HTTP headers that an attacker might manipulate in a password reset poisoning attack:
+
+1. Host: This header specifies the domain name of the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious website that looks like the real one. For example: `Host: evil-user.net`
+
+2. Referer: This header specifies the URL of the page that the client was on when they made the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the user came from a legitimate page on the real website. For example: `Referer: https://real-website.com/reset-password`
+
+3. Location: This header is used in HTTP responses to redirect the client to a different URL. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious website. For example: `Location: https://evil-user.net/reset-password`
+
+4. User-Agent: This header identifies the client making the request, such as a web browser or a mobile app. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a legitimate client. For example: `User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36`
+
+5. Cookie: This header contains any cookies that have been set by the server for the client. In a password reset poisoning attack, the attacker might modify this header to steal the user's session cookie and gain access to their account. For example: `Cookie: sessionid=abcdef1234567890`
+
+6. Origin: This header specifies the origin of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a legitimate origin. For example: `Origin: https://real-website.com`
+
+7. X-Forwarded-Host: This header is used by load balancers to identify the domain name of the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious website that looks like the real one. For example: `X-Forwarded-Host: evil-user.net`
+
+8. X-Forwarded-Server-Port: This header is used by load balancers to identify the server and port number that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious server on a different port. For example: `X-Forwarded-Server-Port: evil-user.net:8080`
+
+
+9. X-Forwarded-Host-Proto: This header is used by load balancers to identify the host and protocol used by the client making the request. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious server with a different host and protocol. For example: `X-Forwarded-Host-Proto: evil-user.net:https`
+
+10. X-Forwarded-Server-IP: This header is used by load balancers to identify the IP address of the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a attacker server IP address. For example: `X-Forwarded-Server-IP: 192.168.1.1` where 192.168.1.1 is attacker server 
+
+
+11. X-Forwarded-URI: This header is used by load balancers to identify the URI of the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious URI. For example: `X-Forwarded-URI: /malicious-uri`
+
+12. X-Forwarded-Path: This header is used by load balancers to identify the path of the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious path. For example: `X-Forwarded-Path: /malicious-path`
+
+13. X-Forwarded-Method: This header is used by load balancers to identify the HTTP method used by the client making the request, such as GET or POST. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different HTTP method. For example: `X-Forwarded-Method: POST`
+
+14. X-Forwarded-Protocol: This header is used by load balancers to identify the protocol used by the client making the request, such as HTTP or HTTPS. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a secure connection. For example: `X-Forwarded-Protocol: https`
+
+15. X-Forwarded-Proto: This header is used by load balancers to identify the protocol used by the client making the request, such as HTTP or HTTPS. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a secure connection. For example: `X-Forwarded-Proto: https`
+ 
+16. X-Forwarded-Port: This header is used by load balancers to identify the port number of the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to redirect the user to a malicious server on a different port. For example: `X-Forwarded-Port: 8080`
+
+17. X-Forwarded-User: This header is used by load balancers to identify the user making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a legitimate user. For example: `X-Forwarded-User: Crypt00o`
+
+18. X-Forwarded-SSL: This header is used by load balancers to identify whether the client is using a secure connection. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a secure connection. For example: `X-Forwarded-SSL: on`
+
+19. X-Forwarded-For: This header is used by proxy servers to identify the IP address of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different IP address. For example: `X-Forwarded-For: 192.168.1.1`
+
+20. X-Forwarded-For-IP: This header is used by load balancers to identify the IP address of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different IP address. For example: `X-Forwarded-For-IP: 192.168.1.1`
+
+21. X-Forwarded-Client-IP: This header is used by load balancers to identify the IP address of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a legitimate client IP address. For example: `X-Forwarded-Client-IP: 192.168.1.1`
+
+22.  X-Real-IP: This header is used by load balancers to identify the IP address of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different IP address. For example: `X-Real-IP: 192.168.1.1`
+
+
+23. X-Forwarded-For-Server: This header is used by load balancers to identify the server that the client is trying to access. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a legitimate server. For example: `X-Forwarded-For-Server: real-website.com`
+
+24. X-Forwarded-Client-Protocol: This header is used by load balancers to identify the protocol used by the client making the request, such as HTTP or HTTPS. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different protocol. For example: `X-Forwarded-Client-Protocol: HTTPS`
+
+25. X-Forwarded-For-Referer: This header is used by load balancers to identify the referer of the client making the request, such as the website or page that the user came from. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different referer. For example: `X-Forwarded-For-Referer: https:/real-website.com/`
+
+26. X-Forwarded-For-User-Agent: This header is used by load balancers to identify the user agent of the client making the request, such as the browser or device used. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different user agent. For example: `X-Forwarded-For-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299`
+
+27. X-Forwarded-For-Client-Host: This header is used by load balancers to identify the host name of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different client host name. For example: `X-Forwarded-For-Client-Host: malicious-host.com`
+
+

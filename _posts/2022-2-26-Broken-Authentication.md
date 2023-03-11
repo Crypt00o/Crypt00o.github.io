@@ -394,3 +394,15 @@ Password reset poisoning is a method of stealing the unique token to change anot
 27. X-Forwarded-For-Client-Host: This header is used by load balancers to identify the host name of the client making the request. In a password reset poisoning attack, the attacker might modify this header to make it look like the request is coming from a different client host name. For example: `X-Forwarded-For-Client-Host: malicious-host.com`
 
 
+### Changing Passwords Broken Logic & Functionality
+
+Changing user passwords is an important security measure to protect online accounts.
+The process typically `involves entering the current password and a new password twice`.
+Password change pages `use the same process as login pages to verify usernames and passwords`.
+This makes them `vulnerable to the same techniques used to exploit login pages`.
+Password change functionality can be dangerous if it `allows attackers to access it directly`.
+Attackers can potentially `target arbitrary users by editing hidden fields in the request`.
+This can be `used to enumerate usernames` and `brute-force passwords`.
+Strong and unique passwords should be used when changing passwords.
+Website and application developers should implement strong security measures to protect against attacks.
+Regularly changing passwords is an important step in maintaining account security.

@@ -278,6 +278,12 @@ verification-code=987654
 
 - Furthermore, if a `similar limit is not applied to cookie guesses as is applied to login attempts`, an attacker can `use cookie guessing to bypass login attempt limits`. For example, if a website limits login attempts to 3 per hour, an attacker can potentially guess multiple cookies within an hour to gain access without triggering the login attempt limit.
 
+- So, even if an attacker can't create their own account on a website, they may still be able to exploit a vulnerability. One way they could do this is by `using cross-site scripting (XSS) to steal another user's "remember me" cookie. `
+
+From there, `the attacker could figure out how the cookie is constructed`, which could be `especially easy if the website was built using an open-source framework`. 
+
+In some cases, the attacker could even `obtain the user's actual password from the cookie, even if it's hashed`. This is because `there are databases of hashed passwords available online`, and if the user's password is on one of these lists, it could be decrypted relatively easily. 
+
 ### Ressting-Password Broken Functionality & Logic
 
 - When users forget their passwords, websites need to provide a way for them to reset it. However, this `password reset feature can be a security risk if not implemented securely`. `One way to reset passwords is by sending a new password to the user's email.` However, `this method is not secure` because e`mails can be intercepted by attackers`. Instead, `some websites generate a new password and send it to the user's email`, but `this password should expire soon after and be changed by the user immediately`. 
